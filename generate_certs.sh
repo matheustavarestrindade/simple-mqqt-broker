@@ -7,8 +7,8 @@ KEY_SIZE=2048
 VALIDITY_DAYS=3650
 
 # Subjects
-CA_SUBJ="/C=US/ST=State/L=City/O=MyOrg/CN=MyMosquittoCA"
-SERVER_SUBJ="/C=US/ST=State/L=City/O=MyOrg/CN=localhost"
+CA_SUBJ="/C=US/ST=State/L=City/O=MyOrg/CN=TrindadeMedia"
+SERVER_SUBJ="/C=US/ST=State/L=City/O=MyOrg/CN=mosquitto.trindademedia.dev"
 CLIENT_SUBJ_BASE="/C=US/ST=State/L=City/O=MyOrg/CN="
 
 # Space-separated client names
