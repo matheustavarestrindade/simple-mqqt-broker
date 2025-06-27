@@ -21,8 +21,8 @@ services:
       # Only expose the SSL/TLS MQTT port
       - "8883:8883"
     volumes:
-      - ./mosquitto.conf:/mosquitto/config/mosquitto.conf
-      - ./certs:/mosquitto/certs:ro # Read-only mount for certificates and keys
+      - ./mosquitto/mosquitto.conf:/mosquitto/config/mosquitto.conf
+      - ./mosquitto/certs:/mosquitto/certs:ro # Read-only mount for certificates and keys
     restart: unless-stopped
     command: mosquitto -c /mosquitto/config/mosquitto.conf
     # Ensure the certificate generation completes before Mosquitto starts
