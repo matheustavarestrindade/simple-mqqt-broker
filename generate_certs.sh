@@ -80,5 +80,12 @@ for client_name in $CLIENTS; do
     echo "  ✅ Done: $CLIENT_KEY, $CLIENT_CRT"
 done
 
+### --- 4. Set permissions for Mosquitto ---
+echo ""
+echo "🔒 Adjusting file permissions for Mosquitto..."
+chown -R mosquitto:mosquitto "$CERTS_DIR"
+find "$CERTS_DIR" -name "*.key" -exec chmod 640 {} \;
+find "$CERTS_DIR" -name "*.crt" -exec chmod 644 {} \;
+
 echo ""
 echo "🎉 All certificates and keys generated successfully in '$CERTS_DIR'."
