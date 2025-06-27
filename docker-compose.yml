@@ -13,26 +13,19 @@ services:
     volumes:
       - "./certs:/app/certs"
 
-  # Mosquitto MQTT server with SSL/TLS
   mosquitto:
-    image: eclipse-mosquitto:2.0.15 # Using a specific version for stability
+    image: eclipse-mosquitto:2.0.15 
     container_name: mosquitto_ssl
     ports:
-      # Only expose the SSL/TLS MQTT port
       - "8883:8883"
     volumes:
-      - ./mosquitto/config:/mosquitto/config
-      - ./mosquitto/certs:/mosquitto/certs:ro # Read-only mount for certificates and keys
+      - ./mosquitto:/mosquitto/config
+      - ./mosquitto/certs:/mosquitto/certs:ro 
     restart: unless-stopped
-    command: mosquitto -c /mosquitto/config/mosquitto.conf
-    # Ensure the certificate generation completes before Mosquitto starts
+    command: mosquitto -c /mosquitto/mosquitto.conf
     depends_on:
       - cert_generator
-    # Healthcheck configuration for Mosquitto, now using SSL/TLS
     healthcheck:
-      # Test command to check Mosquitto's availability on the SSL/TLS port (8883).
-      # It attempts to subscribe to a system topic using mosquitto_sub,
-      # providing the necessary CA certificate, client certificate, and client key.
       test: ["CMD-SHELL", "mosquitto_sub -h localhost -p 8883 --cafile /mosquitto/certs/ca.crt --cert /mosquitto/certs/healthcheck.crt --key /mosquitto/certs/healthcheck.key -t '$$SYS/broker/version' -C 1 -W 5"]
       interval: 10s       # How often to perform the check (every 10 seconds)
       timeout: 5s         # How long to wait for the command to complete (5 seconds)
