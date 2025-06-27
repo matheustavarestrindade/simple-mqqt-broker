@@ -19,7 +19,7 @@ services:
     ports:
       - "8883:8883"
     volumes:
-      - ./mosquitto:/mosquitto/config/
+      - ./mosquitto:/mosquitto/config
       - ./mosquitto/certs:/mosquitto/certs:ro 
     restart: unless-stopped
     command: mosquitto -c /mosquitto/mosquitto.conf
