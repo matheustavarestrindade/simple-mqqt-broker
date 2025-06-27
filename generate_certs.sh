@@ -12,7 +12,7 @@ SERVER_SUBJ="/C=US/ST=State/L=City/O=MyOrg/CN=mosquitto.trindademedia.dev"
 CLIENT_SUBJ_BASE="/C=US/ST=State/L=City/O=MyOrg/CN="
 
 # Space-separated client names
-CLIENTS="hydroponic-farm water-tank healthcheck"
+CLIENTS="hydroponic-farm water-tank healthcheck client"
 
 # File names (generated automatically)
 CA_KEY="$CERTS_DIR/ca.key"
