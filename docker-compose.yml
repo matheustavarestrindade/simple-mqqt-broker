@@ -11,7 +11,7 @@ services:
       dockerfile: Dockerfile.cert_generator
     container_name: cert_generator
     volumes:
-      - "./mosquitto/certs:/app/certs"
+      - ./mosquitto/certs:/app/certs
 
   mosquitto:
     image: eclipse-mosquitto:2.0.15 
@@ -19,10 +19,10 @@ services:
     ports:
       - "8883:8883"
     volumes:
-      - ./mosquitto/config:/mosquitto
+      - ./mosquitto/config:/mosquitto/config
       - ./mosquitto/certs:/mosquitto/certs:ro 
     restart: unless-stopped
-    command: mosquitto -c /mosquitto/mosquitto.conf
+    command: mosquitto -c /mosquitto/config/mosquitto.conf
     depends_on:
       - cert_generator
     healthcheck:
