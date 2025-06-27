@@ -1,7 +1,0 @@
-FROM alpine/git:latest
-
-RUN apk add --no-cache openssl
-COPY generate_certs.sh /app/generate_certs.sh
-RUN chmod +x /app/generate_certs.sh
-
-ENTRYPOINT ["/bin/sh", "/app/generate_certs.sh"]

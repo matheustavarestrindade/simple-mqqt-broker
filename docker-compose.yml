@@ -1,33 +1,20 @@
-# docker-compose.yml
-# Docker Compose file to set up a Mosquitto MQTT server with SSL/TLS ONLY,
-# including a service to generate certificates and a healthcheck for Mosquitto.
-
 version: '3.8'
 
 services:
-  cert_generator:
+  mosquitto_ssl:
     build:
       context: .
-      dockerfile: Dockerfile.cert_generator
-    container_name: cert_generator
-    volumes:
-      - ./mosquitto/certs:/app/certs
-
-  mosquitto:
-    image: eclipse-mosquitto:2.0.15 
+      dockerfile: Dockerfile
     container_name: mosquitto_ssl
     ports:
-      - "8883:8883"
+      - "8883:8883"  # Porta MQTT com TLS
     volumes:
-      - ./mosquitto/config:/mosquitto/config
-      - ./mosquitto/certs:/mosquitto/certs:ro 
+      - mosquitto_certs:/etc/mosquitto/certs    # Certificados gerados e persistidos aqui
+      - mosquitto_data:/var/lib/mosquitto       # Mensagens persistentes (opcional)
+      - mosquitto_logs:/var/log/mosquitto       # Logs persistentes (opcional)
     restart: unless-stopped
-    command: mosquitto -c /mosquitto/config/mosquitto.conf
-    depends_on:
-      - cert_generator
-    healthcheck:
-      test: ["CMD-SHELL", "mosquitto_sub -h localhost -p 8883 --cafile /mosquitto/certs/ca.crt --cert /mosquitto/certs/healthcheck.crt --key /mosquitto/certs/healthcheck.key -t '$$SYS/broker/version' -C 1 -W 5"]
-      interval: 10s       # How often to perform the check (every 10 seconds)
-      timeout: 5s         # How long to wait for the command to complete (5 seconds)
-      retries: 3          # How many times to retry before marking as unhealthy (3 retries)
-      start_period: 30s   # Give the service 30 seconds to start up before applying health checks
+
+volumes:
+  mosquitto_certs:
+  mosquitto_data:
+  mosquitto_logs:

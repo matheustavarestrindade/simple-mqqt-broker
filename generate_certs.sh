@@ -2,7 +2,7 @@
 # generate_certs.sh — SH-compatible script for generating Mosquitto SSL/TLS certs
 
 ### --- CONFIGURATION SECTION --- ###
-CERTS_DIR="certs"
+CERTS_DIR="/etc/mosquitto/certs"
 KEY_SIZE=2048
 VALIDITY_DAYS=3650
 
